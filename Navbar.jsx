@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import hotelLogo from "../assets/Hoteels.jpg";
 
 const links = [
@@ -8,16 +8,16 @@ const links = [
   { name: "Services", path: "/services" },
   { name: "Prices", path: "/prices" },
   { name: "Contact", path: "/contact" },
+  { name: "Booking", path: "/book" }
 ];
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     setIsOpen(false);
-    window.location.href="/login";
+    window.location.href = "/login";
   };
 
   return (
@@ -32,6 +32,7 @@ function Navbar() {
               alt="Hotel Logo"
               className="w-14 h-14 object-cover rounded-full"
             />
+
             <h1 className="text-xl italic font-bold">
               Hotel & Suite
             </h1>
@@ -40,14 +41,16 @@ function Navbar() {
           {/* Mobile Menu Button */}
           <button
             className="md:hidden text-2xl"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() =>
+              setIsOpen(!isOpen)
+            }
           >
             {isOpen ? "✕" : "☰"}
           </button>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 items-center">
-            {links.map((link)=>(
+            {links.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
@@ -70,15 +73,19 @@ function Navbar() {
         {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-60 mt-4" : "max-h-0"
+            isOpen
+              ? "max-h-60 mt-4"
+              : "max-h-0"
           }`}
         >
           <div className="flex flex-col gap-3">
-            {links.map((link)=>(
+            {links.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                onClick={()=>setIsOpen(false)}
+                onClick={() =>
+                  setIsOpen(false)
+                }
               >
                 {link.name}
               </Link>
@@ -92,6 +99,7 @@ function Navbar() {
             </button>
           </div>
         </div>
+
       </nav>
 
       {/* spacing under fixed navbar */}
